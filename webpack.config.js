@@ -6,7 +6,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const htmlPlugin = new HtmlWebPackPlugin({
     template: "./public/index.html",
-    filename: "./index.html"
+    filename: "./customer.html",
+    hash: true
 });
 
 const namedModulesPlugin = new webpack.NamedModulesPlugin();
@@ -48,8 +49,7 @@ module.exports = {
     },
     plugins: [htmlPlugin, namedModulesPlugin, hotModuleReplacement,new MinifyPlugin(),new UglifyJsPlugin()],
     output: {
-        publicPath: "/customer",
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        filename: 'customer/[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
     }
 };

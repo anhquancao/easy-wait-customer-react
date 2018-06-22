@@ -3,7 +3,10 @@ import {computed, observable, action} from "mobx";
 
 class AuthStore {
     @observable user = {
-        name: "test"
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
     };
 
     @observable isSignedIn = false;
@@ -12,9 +15,8 @@ class AuthStore {
         return this.user.name;
     }
 
-    toggleSignIn = () => {
-        this.isSignedIn = !this.isSignedIn;
-        this.user.name = new Date().getMilliseconds();
+    updateUser = (field, value) => {
+        this[field] = value;
     }
 }
 

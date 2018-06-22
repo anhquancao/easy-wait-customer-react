@@ -6,7 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const htmlPlugin = new HtmlWebPackPlugin({
     template: "./public/index.html",
-    filename: "./customer.html",
+    filename: "./index.html",
     hash: true
 });
 
@@ -49,7 +49,8 @@ module.exports = {
     },
     plugins: [htmlPlugin, namedModulesPlugin, hotModuleReplacement,new MinifyPlugin(),new UglifyJsPlugin()],
     output: {
-        filename: 'customer/[name].bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: "customer"
     }
 };

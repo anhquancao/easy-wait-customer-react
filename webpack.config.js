@@ -1,7 +1,8 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
+const MinifyPlugin = require("babel-minify-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const htmlPlugin = new HtmlWebPackPlugin({
     template: "./public/index.html",
@@ -45,8 +46,9 @@ module.exports = {
             }
         ]
     },
-    plugins: [htmlPlugin, namedModulesPlugin, hotModuleReplacement],
+    plugins: [htmlPlugin, namedModulesPlugin, hotModuleReplacement,new MinifyPlugin(),new UglifyJsPlugin()],
     output: {
+        publicPath: "/customer",
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     }

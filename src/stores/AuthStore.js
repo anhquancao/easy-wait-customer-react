@@ -16,7 +16,7 @@ class AuthStore {
     }
 
     updateUser = (field, value) => {
-        this[field] = value;
+        this.user[field] = value;
     }
 }
 

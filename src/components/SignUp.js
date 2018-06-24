@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import style from '../styles/SignUp.css';
 import {observer} from 'mobx-react';
@@ -10,6 +9,12 @@ class SignUp extends Component {
     updateForm = (e) => {
         this.authStore.updateUser(e.target.name, e.target.value);
     };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.authStore.register();
+    };
+
     render() {
         return (
             <div className={"card my-3 " + style.formSignUp}>
@@ -17,7 +22,7 @@ class SignUp extends Component {
                     <div className="card-title">
                         Customer Sign Up
                     </div>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="name">Name</label>
                             <input
@@ -28,6 +33,14 @@ class SignUp extends Component {
                                 name="name"
                                 className="form-control"
                                 placeholder="Enter name"/>
+                            {
+                                this.authStore.messages["name"] && (
+                                    <small className="text-danger form-text ">
+                                        {this.authStore.messages["name"]}
+                                    </small>
+                                )
+                            }
+
                         </div>
                         <div className="form-group">
                             <label htmlFor="email">Email address</label>
@@ -39,6 +52,14 @@ class SignUp extends Component {
                                 name="email"
                                 className="form-control"
                                 placeholder="Enter email"/>
+                            {
+                                this.authStore.messages["email"] && (
+                                    <small className="text-danger form-text ">
+                                        {this.authStore.messages["email"]}
+                                    </small>
+                                )
+                            }
+
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
@@ -50,6 +71,14 @@ class SignUp extends Component {
                                 type="password"
                                 className="form-control"
                                 placeholder="Enter your password"/>
+                            {
+                                this.authStore.messages["password"] && (
+                                    <small className="text-danger form-text ">
+                                        {this.authStore.messages["password"]}
+                                    </small>
+                                )
+                            }
+
                         </div>
                         <div className="form-group">
                             <label htmlFor="password_confirmation">Confirm password</label>
@@ -60,6 +89,7 @@ class SignUp extends Component {
                                 type="password"
                                 className="form-control"
                                 placeholder="Re-enter your password"/>
+
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>

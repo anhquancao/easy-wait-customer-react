@@ -7,6 +7,8 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import AuthStore from "./stores/AuthStore";
 import {getToken, getUser} from "./utils/authHelper";
+import QueueStore from "./stores/QueueStore";
+import CreateQueue from "./components/CreateQueue";
 
 class App extends Component {
     componentDidMount() {
@@ -23,9 +25,14 @@ class App extends Component {
             <div className={style.App}>
                 <Navbar authStore={AuthStore}/>
                 <Switch>
-                    <Route exact path='/' render={() => <Home authStore={AuthStore}/>}/>
-                    <Route exact path='/sign-in' render={() => <SignIn authStore={AuthStore}/>} />
-                    <Route exact path='/sign-up' render={() => <SignUp authStore={AuthStore} />} />
+                    <Route exact path='/' render={() => (
+                        <Home
+                            queueStore={QueueStore}
+                            authStore={AuthStore}/>
+                    )}/>
+                    <Route exact path='/sign-in' render={() => <SignIn authStore={AuthStore}/>}/>
+                    <Route exact path='/sign-up' render={() => <SignUp authStore={AuthStore}/>}/>
+                    <Route exact path="/queue/create" render={() => <CreateQueue queueStore={QueueStore}/>}/>
                 </Switch>
             </div>
         );

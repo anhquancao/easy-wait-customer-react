@@ -1,34 +1,28 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-const htmlPlugin = new HtmlWebPackPlugin({
-    template: "./public/index.html",
-    filename: "./index.html",
-    hash: true
-});
-
-const namedModulesPlugin = new webpack.NamedModulesPlugin();
-const hotModuleReplacement = new webpack.HotModuleReplacementPlugin();
-
 module.exports = {
-    devServer: {
-        contentBase: './dist',
-        hot: true
+    entry: {
+        app: './src/index.js'
     },
+    output: {
+        publicPath: '/',
+        filename: 'bundle.[hash].js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
+                use: ['babel-loader']
             },
             {
-                test: /\.css$/,
+                test: /\.less$/,
                 use: [
                     {
                         loader: "style-loader"
@@ -36,21 +30,33 @@ module.exports = {
                     {
                         loader: "css-loader",
                         options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: "[name]_[local]_[hash:base64]",
                             sourceMap: true,
-                            minimize: true
+                            modules: true,
+                            camelCase: true,
+                            localIdentName: "[local]___[hash:base64:5]"
                         }
+                    },
+                    {
+                        loader: "less-loader"
                     }
                 ]
             }
         ]
     },
-    plugins: [htmlPlugin, namedModulesPlugin, hotModuleReplacement,new MinifyPlugin(),new UglifyJsPlugin()],
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: "/"
+    plugins: [
+        new CleanWebpackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            title: 'Development',
+            template: 'public/index.html',
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new UglifyJsPlugin()
+    ],
+    devServer: {
+        contentBase: './dist',
+        hot: true,
+        historyApiFallback: true,
+        open: true
+
     }
 };

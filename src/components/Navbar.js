@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import style from "../styles/Navbar.css";
+import style from "../styles/Navbar.less";
 import {observer} from 'mobx-react';
 
 @observer

@@ -1,8 +1,11 @@
 {
   "presets": [
     "env",
-    "mobx",
-    "react"
+    "react",
+    "stage-2"
   ],
-  "plugins": ["syntax-object-rest-spread"]
+  "plugins": [
+    "transform-decorators-legacy",
+    "react-hot-loader/babel"
+  ]
 }

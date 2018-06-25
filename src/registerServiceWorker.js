@@ -53,6 +53,12 @@ export default function register() {
 }
 
 function registerValidSW(swUrl) {
+ReactDOM.render(
+    (
+        <BrowserRouter basename="/customer">
+            <App/>
+        </BrowserRouter>
+    ), document.getElementById('root'));
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {

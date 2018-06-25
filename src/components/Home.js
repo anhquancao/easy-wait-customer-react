@@ -15,13 +15,18 @@ class Home extends Component {
         this.queueStore.getQueues(page);
     };
 
+    deleteQueue(id) {
+        this.queueStore.deleteQueue(id);
+    }
+
     render() {
-        if (!this.authStore.isSignedIn) {
-            return <Redirect to="/sign-in"/>
-        }
         return (
             <div className="container">
                 <Link to="/queue/create" className="btn btn-primary my-3">Create Queue</Link>
+                {
+                    this.queueStore.isLoading && <div className="mb-3">Loading...</div>
+
+                }
                 <table className="table table-striped">
                     <thead>
                     <tr>
@@ -44,7 +49,15 @@ class Home extends Component {
                                     <td>{queue.number_waiting_people}</td>
                                     <td>{queue.estimate_waiting_time}</td>
                                     <td>
-                                        <button className="btn btn-danger">Delete</button>
+                                        <div className="btn-group">
+                                            <Link to={"/queue/" + queue.id + "/edit"}
+                                                  className="btn btn-secondary">Edit
+                                            </Link>
+                                            <button
+                                                onClick={() => this.deleteQueue(queue.id)}
+                                                className="btn btn-danger">Delete
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             )

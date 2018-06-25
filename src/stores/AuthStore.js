@@ -23,10 +23,13 @@ class AuthStore {
         return this.user.name;
     }
 
+    @action
     updateUser = (field, value) => {
         this.user[field] = value;
     };
 
+
+    @action
     signInSuccess(token, user) {
         setToken(token);
         setUser(user);
@@ -34,6 +37,7 @@ class AuthStore {
         this.isSignedIn = true;
     }
 
+    @action
     register = async () => {
         this.isLoading = true;
         try {
@@ -43,12 +47,14 @@ class AuthStore {
             this.signInSuccess(token, user);
 
         } catch (e) {
+            console.log(e);
             this.messages = e.response.data.messages;
         } finally {
             this.isLoading = false;
         }
     };
 
+    @action
     signIn = async () => {
         this.isLoading = true;
         try {
@@ -65,11 +71,17 @@ class AuthStore {
         }
     };
 
+    @action
     signOut = () => {
         signOut();
         this.user = {};
         this.token = {};
         this.isSignedIn = false;
+    }
+
+    @action
+    resetForm = () => {
+        this.messages = {};
     }
 }
 

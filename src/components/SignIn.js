@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {Redirect} from 'react-router-dom';
-import style from '../styles/SignIn.css';
+import style from '../styles/SignIn.less';
 
 @observer
 class SignIn extends Component {
     authStore = this.props.authStore;
+
+    componentWillMount() {
+        this.authStore.resetForm();
+    }
 
     updateForm = (e) => {
         this.authStore.updateUser(e.target.name, e.target.value);

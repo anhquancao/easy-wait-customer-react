@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import style from '../styles/SignUp.css';
+import style from '../styles/SignUp.less';
 import {observer} from 'mobx-react';
 import {Redirect} from 'react-router-dom';
 

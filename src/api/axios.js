@@ -13,7 +13,7 @@ export const getAxios = () => {
         }
     }
     return axios.create({
-        timeout: 1000,
+        timeout: 30000,
         headers: headers
     });
 };

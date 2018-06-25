@@ -1,8 +1,18 @@
 import {API_URL} from "../const/env";
-import axios from 'axios';
+import {getAxios} from "./axios";
+
+
 
 export default {
     register: (user) => {
-        return axios.post(API_URL + "auth/sign-up",user);
+        return getAxios().post(API_URL + "auth/sign-up", user);
+    },
+
+    signIn: (user) => {
+        return getAxios().post(API_URL + "auth/sign-in", user);
+    },
+
+    me: () => {
+        return getAxios().get(API_URL + "auth/me");
     }
 }

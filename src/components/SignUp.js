@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import style from '../styles/SignUp.css';
 import {observer} from 'mobx-react';
+import {Redirect} from 'react-router-dom';
 
 @observer
 class SignUp extends Component {
@@ -12,10 +13,14 @@ class SignUp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.authStore.register();
+        if (!this.authStore.isLoading)
+            this.authStore.register();
     };
 
     render() {
+        if (this.authStore.isSignedIn) {
+            return <Redirect to="/"/>
+        }
         return (
             <div className={"card my-3 " + style.formSignUp}>
                 <div className="card-body">
@@ -27,7 +32,7 @@ class SignUp extends Component {
                             <label htmlFor="name">Name</label>
                             <input
                                 onChange={this.updateForm}
-                                value={this.authStore.user.name}
+                                value={this.authStore.user.name || ""}
                                 type="text"
                                 id="name"
                                 name="name"
@@ -46,7 +51,7 @@ class SignUp extends Component {
                             <label htmlFor="email">Email address</label>
                             <input
                                 onChange={this.updateForm}
-                                value={this.authStore.user.email}
+                                value={this.authStore.user.email || ""}
                                 type="email"
                                 id="email"
                                 name="email"
@@ -66,7 +71,7 @@ class SignUp extends Component {
                             <input
                                 onChange={this.updateForm}
                                 id="password"
-                                value={this.authStore.user.password}
+                                value={this.authStore.user.password || ""}
                                 name="password"
                                 type="password"
                                 className="form-control"
@@ -87,11 +92,18 @@ class SignUp extends Component {
                                 id="password_confirmation"
                                 name="password_confirmation"
                                 type="password"
+                                value={this.authStore.user.password_confirmation || ""}
                                 className="form-control"
                                 placeholder="Re-enter your password"/>
 
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <button
+                            type="submit"
+                            className={(this.authStore.isLoading && "disabled ") + " btn btn-primary"}>
+                            {
+                                this.authStore.isLoading ? "Loading..." : "Submit"
+                            }
+                        </button>
                     </form>
                 </div>
             </div>

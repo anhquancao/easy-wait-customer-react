@@ -1,6 +1,8 @@
 {
   "presets": [
+    "env",
     "mobx",
     "react"
-  ]
+  ],
+  "plugins": ["syntax-object-rest-spread"]
 }

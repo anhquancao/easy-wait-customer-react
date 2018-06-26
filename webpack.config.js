@@ -5,15 +5,15 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-    entry: {
-        app: './src/index.js'
-    },
+    entry: [
+        './src/index.js'
+    ],
     output: {
         publicPath: '/',
         filename: 'bundle.[hash].js',
         path: path.resolve(__dirname, 'dist')
     },
-    devtool: 'inline-source-map',
+    devtool: "cheap-eval-source-map",
     module: {
         rules: [
             {
@@ -44,19 +44,21 @@ module.exports = {
         ]
     },
     plugins: [
+
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'Development',
             template: 'public/index.html',
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        new UglifyJsPlugin()
+        new UglifyJsPlugin({
+            sourceMap: true
+        }),
+        // new webpack.HotModuleReplacementPlugin(),
+
     ],
     devServer: {
         contentBase: './dist',
-        hot: true,
         historyApiFallback: true,
         open: true
-
     }
 };

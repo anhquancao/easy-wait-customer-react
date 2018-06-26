@@ -16,6 +16,7 @@ class App extends Component {
         const token = getToken();
         if (token) {
             const currentTime = (new Date).getTime();
+            console.log(currentTime);
             // check if the token expired
             if (currentTime - token.time > (token.expires_in - 120) * 1000) {
                 // sign out if the token expired

@@ -1,4 +1,5 @@
 export const setToken = (token) => {
+    token.time = (new Date).getTime();
     const tokenStr = JSON.stringify(token);
     localStorage.setItem("token", tokenStr);
 };

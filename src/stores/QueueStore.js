@@ -12,10 +12,10 @@ class QueueStore {
     @observable messages = {};
 
     @action
-    getQueues = async (page = 1) => {
+    getQueues = async (userId, page = 1) => {
         this.isLoading = true;
         try {
-            const res = await QueueApi.getQueues(page);
+            const res = await QueueApi.getQueues(userId, page);
             this.queues = res.data.queues;
         } catch (e) {
         } finally {

@@ -12,7 +12,7 @@ class Home extends Component {
     };
 
     loadQueues = (page = 1) => {
-        this.queueStore.getQueues(page);
+        this.queueStore.getQueues(this.authStore.user.id, page);
     };
 
     deleteQueue(id) {

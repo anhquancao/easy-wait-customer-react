@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import AuthStore from "./stores/AuthStore";
-import {getToken, getUser} from "./utils/authHelper";
+import {getToken, getUser, signOut} from "./utils/authHelper";
 import QueueStore from "./stores/QueueStore";
 import CreateQueue from "./components/CreateQueue";
 import Auth from './components/Auth';
@@ -15,9 +15,16 @@ class App extends Component {
     componentWillMount() {
         const token = getToken();
         if (token) {
-            AuthStore.user = getUser();
-            AuthStore.token = token;
-            AuthStore.isSignedIn = true;
+            const currentTime = (new Date).getTime();
+            // check if the token expired
+            if (currentTime - token.time > (token.expires_in - 120) * 1000) {
+                // sign out if the token expired
+                signOut();
+            } else {
+                AuthStore.user = getUser();
+                AuthStore.token = token;
+                AuthStore.isSignedIn = true;
+            }
         }
     }
 

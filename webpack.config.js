@@ -47,11 +47,10 @@ module.exports = {
 
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Development',
             template: 'public/index.html',
         }),
         new UglifyJsPlugin({
-            sourceMap: true
+            sourceMap: true,
         }),
         // new webpack.HotModuleReplacementPlugin(),
 

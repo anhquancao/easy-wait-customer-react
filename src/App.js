@@ -3,13 +3,11 @@ import style from './styles/App.less';
 import Navbar from "./components/Navbar";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Home from "./components/Home";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
 import AuthStore from "./stores/AuthStore";
 import {getToken, getUser, signOut} from "./utils/authHelper";
 import QueueStore from "./stores/QueueStore";
-import CreateQueue from "./components/CreateQueue";
-import Auth from './components/Auth';
+import Loadable from 'react-loadable';
+import Loading from "./components/Loading";
 
 class App extends Component {
     componentWillMount() {
@@ -29,28 +27,34 @@ class App extends Component {
         }
     }
 
+    createLoadableComponent = (importModule) => {
+        return Loadable({
+            loader: importModule,
+            loading: Loading,
+
+        });
+    };
+
     render() {
         return (
             <BrowserRouter basename="/customer">
                 <div className={style.App}>
                     <Navbar authStore={AuthStore}/>
                     <Switch>
-                        <Route exact path='/' render={() => (
-                            <Auth component={
-                                <Home
-                                    queueStore={QueueStore}
-                                    authStore={AuthStore}/>
-                            }/>
-
-                        )}/>
-                        <Route exact path='/sign-in' render={() => <SignIn authStore={AuthStore}/>}/>
-                        <Route exact path='/sign-up' render={() => <SignUp authStore={AuthStore}/>}/>
-                        <Route exact path="/queue/create" render={(props) => (
-                            <Auth component={<CreateQueue {...props} queueStore={QueueStore}/>}/>
-                        )}/>
-                        <Route exact path="/queue/:id/edit" render={(props) => (
-                            <Auth component={<CreateQueue {...props} queueStore={QueueStore}/>}/>
-                        )}/>
+                        <Route exact path='/'
+                               component={this.createLoadableComponent(() => import("./components/Home"))}/>
+                        <Route exact path='/sign-in'
+                               onEnter={() => console.log("test")}
+                               component={this.createLoadableComponent(() => import("./components/SignIn"))}/>
+                        <Route exact path='/sign-up'
+                               component={this.createLoadableComponent(() => import('./components/SignUp'))}/>
+                        <Route exact path="/queue/create"
+                               component={this.createLoadableComponent(() => import('./components/CreateQueue'))}/>
+                        {/*<Route exact path="/queue/:id/edit" render={(props) => (*/}
+                        {/*<Auth >*/}
+                        {/**/}
+                        {/*</Auth>*/}
+                        {/*)}/>*/}
                     </Switch>
                 </div>
             </BrowserRouter>

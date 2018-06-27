@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import style from '../styles/SignUp.less';
 import {observer} from 'mobx-react';
 import {Redirect} from 'react-router-dom';
+import AuthStore from "../stores/AuthStore";
 
 @observer
 class SignUp extends Component {
-    authStore = this.props.authStore;
+    authStore = AuthStore;
 
     updateForm = (e) => {
         this.authStore.updateUser(e.target.name, e.target.value);

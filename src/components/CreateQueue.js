@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import style from '../styles/CreateQueue.less';
+import QueueStore from "../stores/QueueStore";
+import {checkAuth} from '../utils/authHelper';
 
 @observer
 class CreateQueue extends Component {
-    queueStore = this.props.queueStore;
+    queueStore = QueueStore;
 
     componentWillMount() {
+        checkAuth(this.props.history);
         const {id} = this.props.match.params;
         if (id) {
             this.queueStore.loadQueue(id);

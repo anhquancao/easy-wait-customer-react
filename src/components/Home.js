@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import AuthStore from "../stores/AuthStore";
+import QueueStore from "../stores/QueueStore";
+import {checkAuth} from "../utils/authHelper";
 
 @observer
 class Home extends Component {
-    authStore = this.props.authStore;
-    queueStore = this.props.queueStore;
+    authStore = AuthStore;
+    queueStore = QueueStore;
+
+    componentWillMount() {
+        checkAuth(this.props.history);
+    }
 
     componentDidMount() {
         this.loadQueues();

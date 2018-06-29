@@ -24,7 +24,12 @@ class SignIn extends Component {
 
     render() {
         if (this.authStore.isSignedIn) {
-            return <Redirect to="/customer/home"/>
+            if (this.authStore.user.type === "customer") {
+                return <Redirect to="/customer/home"/>
+            }
+            if (this.authStore.user.type === "user") {
+                return <Redirect to="/user/home"/>
+            }
         }
         return (
             <div className={"card my-3 " + style.formSignIn}>

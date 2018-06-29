@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom';
 import AuthStore from "../../stores/AuthStore";
 import QueueStore from "../../stores/QueueStore";
 import {checkAuth} from "../../utils/authHelper";
+import Pagination from "../common/Pagination";
+import Loading from "../Loading";
 
 @observer
 class Home extends Component {
-    authStore = AuthStore;
     queueStore = QueueStore;
 
     componentWillMount() {
@@ -15,11 +16,11 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        // this.loadQueues();
+        this.loadQueues();
     };
 
     loadQueues = (page = 1) => {
-        this.queueStore.getQueues(this.authStore.user.id, page);
+        this.queueStore.getAllQueues(page);
     };
 
     deleteQueue(id) {
@@ -29,10 +30,8 @@ class Home extends Component {
     render() {
         return (
             <div className="container">
-                User Home
                 {
-                    this.queueStore.isLoading && <div className="mb-3">Loading...</div>
-
+                    this.queueStore.isLoading && <Loading/>
                 }
                 <table className="table table-striped">
                     <thead>
@@ -57,12 +56,9 @@ class Home extends Component {
                                     <td>{queue.estimate_waiting_time}</td>
                                     <td>
                                         <div className="btn-group">
-                                            <Link to={"/customer/queue/" + queue.id + "/edit"}
-                                                  className="btn btn-secondary">Edit
-                                            </Link>
                                             <button
                                                 onClick={() => this.deleteQueue(queue.id)}
-                                                className="btn btn-danger">Delete
+                                                className="btn btn-primary">register
                                             </button>
                                         </div>
                                     </td>
@@ -73,6 +69,11 @@ class Home extends Component {
 
                     </tbody>
                 </table>
+                <Pagination
+                    currentPage={this.queueStore.currentPage}
+                    lastPage={this.queueStore.lastPage}
+                    loadPage={(page) => this.loadQueues(page)}
+                />
             </div>
         );
     }

@@ -3,6 +3,10 @@ import {getAxios} from "./axios";
 
 
 export default {
+    getAllQueues: (page) => {
+        const url = API_URL + "queue?page=" + page;
+        return getAxios().get(url);
+    },
     getQueues: (userId, page = 1) => {
         const url = API_URL + "queue/user/" + userId + "?page=" + page;
         return getAxios().get(url);

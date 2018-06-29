@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import AuthStore from "../../stores/AuthStore";
 import QueueStore from "../../stores/QueueStore";
 import {checkAuth} from "../../utils/authHelper";
+import Loading from "../Loading";
 
 @observer
 class Home extends Component {
@@ -31,7 +32,7 @@ class Home extends Component {
             <div className="container">
                 <Link to="/customer/queue/create" className="btn btn-primary my-3">Create Queue</Link>
                 {
-                    this.queueStore.isLoading && <div className="mb-3">Loading...</div>
+                    this.queueStore.isLoading && <Loading/>
 
                 }
                 <table className="table table-striped">

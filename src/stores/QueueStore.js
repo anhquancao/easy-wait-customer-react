@@ -11,12 +11,31 @@ class QueueStore {
 
     @observable messages = {};
 
+    @observable currentPage = 1;
+
+    @observable lastPage = 1;
+
+    @action getAllQueues = async (page = 1) => {
+        this.isLoading = true;
+        try {
+            const res = await  QueueApi.getAllQueues(page);
+            this.queues = res.data.data;
+            this.currentPage = res.data.meta.current_page;
+            this.lastPage = res.data.meta.last_page;
+        } catch (e) {
+        } finally {
+            this.isLoading = false;
+        }
+    };
+
     @action
     getQueues = async (userId, page = 1) => {
         this.isLoading = true;
         try {
             const res = await QueueApi.getQueues(userId, page);
-            this.queues = res.data.queues;
+            this.queues = res.data.data;
+            this.currentPage = res.data.meta.current_page;
+            this.lastPage = res.data.meta.last_page;
         } catch (e) {
         } finally {
             this.isLoading = false;

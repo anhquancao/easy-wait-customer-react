@@ -30,6 +30,6 @@ export const signOut = () => {
 
 export const checkAuth = (history) => {
     if (!AuthStore.isSignedIn) {
-        history.push("/sign-in");
+        history.push("/auth/sign-in");
     }
 };

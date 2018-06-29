@@ -9,7 +9,7 @@ module.exports = {
         './src/index.js'
     ],
     output: {
-        publicPath: '/customer/',
+        publicPath: '/',
         filename: 'bundle.[hash].js',
         path: path.resolve(__dirname, 'dist')
     },
@@ -59,6 +59,6 @@ module.exports = {
         contentBase: './dist',
         historyApiFallback: true,
         open: true,
-        openPage: 'customer/'
+        openPage: 'auth/'
     }
 };

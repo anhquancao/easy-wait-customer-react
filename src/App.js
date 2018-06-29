@@ -2,12 +2,9 @@ import React, {Component} from 'react';
 import style from './styles/App.less';
 import Navbar from "./components/Navbar";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import Home from "./components/Home";
 import AuthStore from "./stores/AuthStore";
 import {getToken, getUser, signOut} from "./utils/authHelper";
-import QueueStore from "./stores/QueueStore";
-import Loadable from 'react-loadable';
-import Loading from "./components/Loading";
+import {createLoadableComponent} from "./utils/loadableHelper";
 
 class App extends Component {
     componentWillMount() {
@@ -27,34 +24,22 @@ class App extends Component {
         }
     }
 
-    createLoadableComponent = (importModule) => {
-        return Loadable({
-            loader: importModule,
-            loading: Loading,
-
-        });
-    };
-
     render() {
         return (
-            <BrowserRouter basename="/customer">
+            <BrowserRouter>
                 <div className={style.App}>
-                    <Navbar authStore={AuthStore}/>
+                    <Navbar/>
                     <Switch>
-                        <Route exact path='/'
-                               component={this.createLoadableComponent(() => import("./components/Home"))}/>
-                        <Route exact path='/sign-in'
-                               onEnter={() => console.log("test")}
-                               component={this.createLoadableComponent(() => import("./components/SignIn"))}/>
-                        <Route exact path='/sign-up'
-                               component={this.createLoadableComponent(() => import('./components/SignUp'))}/>
-                        <Route exact path="/queue/create"
-                               component={this.createLoadableComponent(() => import('./components/CreateQueue'))}/>
-                        {/*<Route exact path="/queue/:id/edit" render={(props) => (*/}
-                        {/*<Auth >*/}
-                        {/**/}
-                        {/*</Auth>*/}
-                        {/*)}/>*/}
+                        <Route path="/auth"
+                               component={createLoadableComponent(() => import('./components/auth/Auth'))}/>
+
+                        <Route path="/customer"
+                               component={createLoadableComponent(() => import('./components/customer/Customer'))}
+                        />
+
+                        <Route path="/user"
+                               component={createLoadableComponent(() => import('./components/user/User'))}
+                        />
                     </Switch>
                 </div>
             </BrowserRouter>

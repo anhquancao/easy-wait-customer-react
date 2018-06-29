@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import style from '../styles/CreateQueue.less';
-import QueueStore from "../stores/QueueStore";
-import {checkAuth} from '../utils/authHelper';
+import style from '../../styles/CreateQueue.less';
+import QueueStore from "../../stores/QueueStore";
+import {checkAuth} from '../../utils/authHelper';
 
 @observer
 class CreateQueue extends Component {
@@ -31,7 +31,7 @@ class CreateQueue extends Component {
         }
         if (saved) {
             this.queueStore.resetForm();
-            this.props.history.push("/");
+            this.props.history.push("/customer/home");
         }
     };
 

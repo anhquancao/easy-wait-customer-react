@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import style from "../styles/Navbar.less";
 import {observer} from 'mobx-react';
+import AuthStore from "../stores/AuthStore";
 
 @observer
 class Navbar extends Component {
-    authStore = this.props.authStore;
+    authStore = AuthStore;
 
     signOut = () => {
         this.authStore.signOut();
+
     };
 
     render() {
@@ -44,10 +46,13 @@ class Navbar extends Component {
                         ) : (
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/sign-in">Sign in</Link>
+                                    <Link className="nav-link" to="/auth/sign-in">Sign in</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/sign-up">Sign up</Link>
+                                    <Link className="nav-link" to="/customer/sign-up">Customer sign up</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/user/sign-up">User sign up</Link>
                                 </li>
                             </ul>
                         )

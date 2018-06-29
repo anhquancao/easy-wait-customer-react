@@ -38,8 +38,9 @@ class AuthStore {
     }
 
     @action
-    register = async () => {
+    register = async (type) => {
         this.isLoading = true;
+        this.user.type = type;
         try {
             const res = await AuthApi.register(this.user);
             // console.log(res);
@@ -77,7 +78,8 @@ class AuthStore {
         this.user = {};
         this.token = {};
         this.isSignedIn = false;
-    }
+        document.location.reload(true);
+    };
 
     @action
     resetForm = () => {

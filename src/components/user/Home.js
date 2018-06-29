@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
-import AuthStore from "../stores/AuthStore";
-import QueueStore from "../stores/QueueStore";
-import {checkAuth} from "../utils/authHelper";
+import AuthStore from "../../stores/AuthStore";
+import QueueStore from "../../stores/QueueStore";
+import {checkAuth} from "../../utils/authHelper";
 
 @observer
 class Home extends Component {
@@ -15,7 +15,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.loadQueues();
+        // this.loadQueues();
     };
 
     loadQueues = (page = 1) => {
@@ -29,7 +29,7 @@ class Home extends Component {
     render() {
         return (
             <div className="container">
-                <Link to="/queue/create" className="btn btn-primary my-3">Create Queue</Link>
+                User Home
                 {
                     this.queueStore.isLoading && <div className="mb-3">Loading...</div>
 
@@ -57,7 +57,7 @@ class Home extends Component {
                                     <td>{queue.estimate_waiting_time}</td>
                                     <td>
                                         <div className="btn-group">
-                                            <Link to={"/queue/" + queue.id + "/edit"}
+                                            <Link to={"/customer/queue/" + queue.id + "/edit"}
                                                   className="btn btn-secondary">Edit
                                             </Link>
                                             <button

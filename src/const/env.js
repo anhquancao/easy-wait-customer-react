@@ -1,1 +1,2 @@
 export const API_URL = window.BASE_URL + "/customer-api/v1/";
+export const AUTH_API_URL = window.BASE_URL + "/auth-api/v1/";

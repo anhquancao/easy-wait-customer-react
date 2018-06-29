@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
+import style from '../../styles/SignUp.less';
 import {observer} from 'mobx-react';
 import {Redirect} from 'react-router-dom';
-import style from '../styles/SignIn.less';
-import AuthStore from "../stores/AuthStore";
+import AuthStore from "../../stores/AuthStore";
 
 @observer
-class SignIn extends Component {
+class SignUp extends Component {
     authStore = AuthStore;
-
-    componentWillMount() {
-        this.authStore.resetForm();
-    }
 
     updateForm = (e) => {
         this.authStore.updateUser(e.target.name, e.target.value);
@@ -19,21 +15,39 @@ class SignIn extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         if (!this.authStore.isLoading)
-            this.authStore.signIn();
+            this.authStore.register("customer");
     };
 
     render() {
         if (this.authStore.isSignedIn) {
-            return <Redirect to="/"/>
+            return <Redirect to="/customer/home"/>
         }
         return (
-            <div className={"card my-3 " + style.formSignIn}>
+            <div className={"card my-3 " + style.formSignUp}>
                 <div className="card-body">
                     <div className="card-title">
-                        Customer Sign In
+                        Customer Sign Up
                     </div>
                     <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input
+                                onChange={this.updateForm}
+                                value={this.authStore.user.name || ""}
+                                type="text"
+                                id="name"
+                                name="name"
+                                className="form-control"
+                                placeholder="Enter name"/>
+                            {
+                                this.authStore.messages["name"] && (
+                                    <small className="text-danger form-text ">
+                                        {this.authStore.messages["name"]}
+                                    </small>
+                                )
+                            }
 
+                        </div>
                         <div className="form-group">
                             <label htmlFor="email">Email address</label>
                             <input
@@ -63,7 +77,25 @@ class SignIn extends Component {
                                 type="password"
                                 className="form-control"
                                 placeholder="Enter your password"/>
-                           
+                            {
+                                this.authStore.messages["password"] && (
+                                    <small className="text-danger form-text ">
+                                        {this.authStore.messages["password"]}
+                                    </small>
+                                )
+                            }
+
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password_confirmation">Confirm password</label>
+                            <input
+                                onChange={this.updateForm}
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                type="password"
+                                value={this.authStore.user.password_confirmation || ""}
+                                className="form-control"
+                                placeholder="Re-enter your password"/>
 
                         </div>
                         <button
@@ -80,4 +112,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default SignUp;

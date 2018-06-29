@@ -27,5 +27,13 @@ export default {
     deleteQueue: (id) => {
         const url = API_URL + "queue/" + id;
         return getAxios().delete(url);
+    },
+    registerQueue: (queueId) => {
+        const url = API_URL + `queue/${queueId}/user`;
+        return getAxios().post(url);
+    },
+    unregisterQueue: (queueId) => {
+        const url = API_URL + `queue/${queueId}/user`;
+        return getAxios().delete(url);
     }
 }

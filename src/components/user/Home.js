@@ -23,9 +23,38 @@ class Home extends Component {
         this.queueStore.getAllQueues(page);
     };
 
-    deleteQueue(id) {
-        this.queueStore.deleteQueue(id);
+    registerQueue(id) {
+        this.queueStore.registerQueue(id);
     }
+
+    unregisterQueue(id) {
+        this.queueStore.unregisterQueue(id);
+    }
+
+    renderButton = (queue) => {
+        switch (queue.status) {
+            case "registered":
+                return (
+                    <div className="btn-group">
+                        <button
+                            onClick={() => this.unregisterQueue(queue.id)}
+                            className="btn btn-danger">
+                            {queue.isLoading ? "Unregistering..." : "Unregister"}
+                        </button>
+                    </div>
+                );
+            case "unregistered":
+                return (
+                    <div className="btn-group">
+                        <button
+                            onClick={() => this.registerQueue(queue.id)}
+                            className="btn btn-primary">
+                            {queue.isLoading ? "Registering..." : "Register"}
+                        </button>
+                    </div>
+                )
+        }
+    };
 
     render() {
         return (
@@ -55,12 +84,7 @@ class Home extends Component {
                                     <td>{queue.number_waiting_people}</td>
                                     <td>{queue.estimate_waiting_time}</td>
                                     <td>
-                                        <div className="btn-group">
-                                            <button
-                                                onClick={() => this.deleteQueue(queue.id)}
-                                                className="btn btn-primary">register
-                                            </button>
-                                        </div>
+                                        {this.renderButton(queue)}
                                     </td>
                                 </tr>
                             )

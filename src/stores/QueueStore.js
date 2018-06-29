@@ -29,6 +29,74 @@ class QueueStore {
     };
 
     @action
+    unregisterQueue = async (queueId) => {
+        try {
+            this.queues = this.queues.map(q => {
+                if (q.id === queueId)
+                    return {
+                        ...q,
+                        isLoading: true
+                    };
+                return q;
+            });
+            const res = await QueueApi.unregisterQueue(queueId);
+            this.queues = this.queues.map(q => {
+                if (q.id === queueId)
+                    return {
+                        ...q,
+                        number_waiting_people: q.number_waiting_people - 1,
+                        status: res.data.status
+                    };
+                return q;
+            });
+        } catch (e) {
+
+        } finally {
+            this.queues = this.queues.map(q => {
+                return {
+                    ...q,
+                    isLoading: false
+                };
+            })
+        }
+
+    };
+
+    @action
+    registerQueue = async (queueId) => {
+        try {
+            this.queues = this.queues.map(q => {
+                if (q.id === queueId)
+                    return {
+                        ...q,
+                        isLoading: true
+                    };
+                return q;
+            });
+            const res = await QueueApi.registerQueue(queueId);
+            this.queues = this.queues.map(q => {
+                if (q.id === queueId)
+                    return {
+                        ...q,
+                        number_waiting_people: q.number_waiting_people + 1,
+                        status: res.data.status
+                    };
+                return q;
+            });
+        } catch (e) {
+
+        } finally {
+            this.queues = this.queues.map(q => {
+                return {
+                    ...q,
+                    isLoading: false
+                };
+            })
+        }
+
+    };
+
+    @action
     getQueues = async (userId, page = 1) => {
         this.isLoading = true;
         try {
@@ -85,7 +153,7 @@ class QueueStore {
         try {
             await QueueApi.updateQueue(this.queue);
             return true;
-        }catch (e) {
+        } catch (e) {
             this.messages = e.response.data.message;
             return false;
         }

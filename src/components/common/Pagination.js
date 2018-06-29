@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 @observer
@@ -27,7 +26,7 @@ class Pagination extends Component {
                         </button>
                     </li>
                     {
-                        _.range(1, this.props.lastPage + 1).map((page) => (
+                        [...Array(this.props.lastPage).keys()].map(i => i + 1).map((page) => (
                             <li className={page === this.props.currentPage ? "page-item active" : "page-item"}>
                                 <button className="page-link" onClick={() => {
                                     this.props.loadPage(page);

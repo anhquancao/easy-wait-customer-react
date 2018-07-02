@@ -59,6 +59,7 @@ class CreateQueue extends Component {
 
                     </div>
 
+
                     <div className="form-group">
                         <label htmlFor="status">Status</label>
                         <select
@@ -74,6 +75,81 @@ class CreateQueue extends Component {
                             this.queueStore.messages["status"] && (
                                 <small className="text-danger form-text ">
                                     {this.queueStore.messages["status"]}
+                                </small>
+                            )
+                        }
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="tini">Estimated initial wait time</label>
+                        <div className="input-group">
+                            <input
+                                onChange={this.updateForm}
+                                value={this.queueStore.queue.tini || ""}
+                                type="number"
+                                id="tini"
+                                name="tini"
+                                className="form-control"
+                                placeholder="Enter minutes"/>
+                            <div className="input-group-append">
+                                <div className="input-group-text">Minutes</div>
+                            </div>
+                        </div>
+
+                        {
+                            this.queueStore.messages["tini"] && (
+                                <small className="text-danger form-text ">
+                                    {this.queueStore.messages["tini"]}
+                                </small>
+                            )
+                        }
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="tmoy">Average service time</label>
+                        <div className="input-group">
+                            <input
+                                onChange={this.updateForm}
+                                value={this.queueStore.queue.tmoy || ""}
+                                type="number"
+                                id="tmoy"
+                                name="tmoy"
+                                className="form-control"
+                                placeholder="Enter minutes"/>
+                            <div className="input-group-append">
+                                <div className="input-group-text">Minutes</div>
+                            </div>
+                        </div>
+
+                        {
+                            this.queueStore.messages["tmoy"] && (
+                                <small className="text-danger form-text ">
+                                    {this.queueStore.messages["tmoy"]}
+                                </small>
+                            )
+                        }
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="trev">Time allow to return</label>
+                        <div className="input-group">
+                            <input
+                                onChange={this.updateForm}
+                                value={this.queueStore.queue.trev || ""}
+                                type="number"
+                                id="trev"
+                                name="trev"
+                                className="form-control"
+                                placeholder="Enter minutes"/>
+                            <div className="input-group-append">
+                                <div className="input-group-text">Minutes</div>
+                            </div>
+                        </div>
+
+                        {
+                            this.queueStore.messages["trev"] && (
+                                <small className="text-danger form-text ">
+                                    {this.queueStore.messages["trev"]}
                                 </small>
                             )
                         }
